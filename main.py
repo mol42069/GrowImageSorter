@@ -3,7 +3,7 @@ import os, math, shutil
 import datetime as dt
 
 
-def rename(path):
+def rename(path):               # from earlier script
 
     dicti = {}
     lastName = ""
@@ -97,9 +97,9 @@ def main():
             FirstEntry = False
             print("not new")
 
-        elif len(file) > 0:
+        elif len(file) > 0:                                   # here we get the files
 
-            if count == 1:
+            if count == 1:                                    # we make sure we use the images from "INPUT"
                 date = file[0].split('.')[0].split('#')[0].split('-')
                 firstDay = dt.datetime(int(date[0]), int(date[1]), int(date[2]))
             count += 1
@@ -123,10 +123,8 @@ def main():
 def sort_img(path, firstDay):
 
     src_path = path + "/INPUT"
-
     files = os.listdir(src_path)
 
-    dic = {}
     directs = None
     for (root, dirs, file) in os.walk(path):        # we create an array with all directorys in our folder
         if len(dirs) > 0:
@@ -160,6 +158,9 @@ def sort_img(path, firstDay):
         if week in directs:     # we check if the week already exists and if the image already exists in that week
             imgs = os.listdir(path + "/" + week)
             if nName not in imgs:                   # if the image doesent exists yet we copy the image here.
+
+                # copy the image and then remove the image from the "INPUT" folder
+
                 src_temp = src_path + "/" + file
                 dest_temp = path + "/" + str(week) + "/" + nName
                 shutil.copy(src_temp, dest_temp)
@@ -170,6 +171,8 @@ def sort_img(path, firstDay):
 
         else:                   # and if the week doesent exist yet we create the folder and copy the images over.
 
+            # create a folder, copy the image and then remove the image from the "INPUT" folder:
+
             os.mkdir(path + "/" + str(week))
             src_temp = src_path + "/" + file
             dest_temp = path + "/" + str(week) + "/" + nName
@@ -178,32 +181,6 @@ def sort_img(path, firstDay):
             os.remove(src_temp)
 
     return
-
-
-
-
-
-
-
-
-
-
-
-def test():
-    week = 0
-
-    print(math.ceil(68/7))
-
-    for x in range(8, 15):
-
-        if x%7 == 0:
-            week += 1
-
-        print(week)
-
-
-
-
 
 
 
